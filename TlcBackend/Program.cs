@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using TlcBackend.Data;
+using TlcBackend.DTOs;
+using TlcBackend.Entities;
+using TlcBackend.Interface;
+using TlcBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Register application services
+builder.Services.AddScoped<IRedemptionService, RedemptionService>();
+builder.Services.AddScoped(typeof(IGenericService<,>), typeof(GenericService<,>));
+
+builder.Services.AddAutoMapper(cfg =>
+    {
+        cfg.AddMaps(typeof(Program).Assembly);
+    });
 var app = builder.Build();
 
 // Enable Swagger
