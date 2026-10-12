@@ -1,0 +1,6 @@
+@TlcBackend_HostAddress = http://localhost:5115
+
+GET {{TlcBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
